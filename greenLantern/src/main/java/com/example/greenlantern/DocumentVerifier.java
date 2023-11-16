@@ -1,4 +1,7 @@
 package com.example.greenlantern;
+
+import java.time.LocalDate;
+
 public class DocumentVerifier {
     public boolean verifyDocument(Document document) {
         // Example verification logic

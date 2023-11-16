@@ -1,10 +1,29 @@
 package com.example.greenlantern;
 
+import java.time.LocalDate;
+
 public class Document {
     private String documentType;
-    private String issueDate;
-    private String expiryDate;
-    // Additional document attributes
+    private LocalDate issueDate;
+    private LocalDate expiryDate;
 
-    // Constructor, getters, setters
+    public Document(String documentType, LocalDate issueDate, LocalDate expiryDate) {
+        this.documentType = documentType;
+        this.issueDate = issueDate;
+        this.expiryDate = expiryDate;
+    }
+
+    // Getters
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public LocalDate getIssueDate() {
+        return issueDate;
+    }
+
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
 }
+
