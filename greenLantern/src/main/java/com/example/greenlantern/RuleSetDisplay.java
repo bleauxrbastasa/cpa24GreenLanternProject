@@ -31,9 +31,10 @@ public class RuleSetDisplay extends JPanel {
 
     private void loadRules() {
         // Place your rules here
-        String rules = "1. Verify the document's dates are valid\n"
+        String rules = "1. Process as many documents as possible\n"
                 + "2. Do not accept discreptancies in documents\n"
-                + "3. Work through as many documents as possible\n";
+                + "3. Verify the document's dates are valid\n"
+                + "4. Verify the document's name is correct\n";
         rulesTextArea.setText(rules);
     }
 }
