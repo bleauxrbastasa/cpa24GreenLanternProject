@@ -8,21 +8,20 @@ import java.awt.event.ActionListener;
 public class GamePanel extends JPanel {
     private DocumentPanel documentPanel;
     private QueueManager queueManager;
+    private RuleSetDisplay ruleSetDisplay;
     private JLabel scoreLabel;
     private JButton nextCharacterButton;
-    private RuleSetDisplay ruleSetDisplay;
-    private int score = 0;
+    private DecisionEngine decisionEngine;
 
-    public GamePanel() {
+    public GamePanel(QueueManager queueManager, DecisionEngine decisionEngine) {
+        this.queueManager = queueManager;
+        this.decisionEngine = decisionEngine;
         setLayout(new BorderLayout());
-        queueManager = new QueueManager(); // Assume queueManager is already populated
-        documentPanel = new DocumentPanel(new DecisionEngine());
-        ruleSetDisplay = new RuleSetDisplay();
 
-        JPanel topPanel = new JPanel(new BorderLayout());
-        scoreLabel = new JLabel("Score: " + score);
-        topPanel.add(scoreLabel, BorderLayout.NORTH);
-        topPanel.add(ruleSetDisplay, BorderLayout.CENTER);
+        documentPanel = new DocumentPanel(decisionEngine, this);
+
+        ruleSetDisplay = new RuleSetDisplay();
+        scoreLabel = new JLabel("Score: " + decisionEngine.getScore());
 
         nextCharacterButton = new JButton("Next Character");
         nextCharacterButton.addActionListener(new ActionListener() {
@@ -32,28 +31,33 @@ public class GamePanel extends JPanel {
             }
         });
 
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.add(ruleSetDisplay);
+        topPanel.add(scoreLabel);
+
         add(topPanel, BorderLayout.NORTH);
         add(documentPanel, BorderLayout.CENTER);
         add(nextCharacterButton, BorderLayout.SOUTH);
+
+        // Load the first character upon initialization
+        loadNextCharacter();
     }
 
-    private void loadNextCharacter() {
-        CharacterProfile nextCharacter = queueManager.removeFromQueue();
-        if (nextCharacter != null) {
-            Document nextDocument = nextCharacter.getDocuments()[0]; // Assume one document per character for simplicity
-            documentPanel.displayDocument(nextDocument);
+    public void loadNextCharacter() {
+        if (queueManager.getQueueSize() > 0) {
+            CharacterProfile nextCharacter = queueManager.removeFromQueue();
+            Document nextDocument = nextCharacter.getDocuments()[0]; // Assuming one document per character
+            documentPanel.displayDocument(nextDocument, nextCharacter); // Pass both document and character
+
+            // Removed the JOptionPane to make the character details appear in the document panel
         } else {
-            // Handle the case when the queue is empty
             JOptionPane.showMessageDialog(this, "No more characters in the queue.");
         }
+        updateScore();
     }
 
-    public void updateScore(boolean decisionMadeCorrectly) {
-        if (decisionMadeCorrectly) {
-            score++;
-        } else {
-            score--;
-        }
-        scoreLabel.setText("Score: " + score);
+    public void updateScore() {
+        scoreLabel.setText("Score: " + decisionEngine.getScore());
     }
 }

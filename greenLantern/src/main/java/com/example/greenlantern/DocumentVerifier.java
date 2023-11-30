@@ -4,11 +4,14 @@ import java.time.LocalDate;
 
 public class DocumentVerifier {
     public boolean verifyDocument(Document document) {
-        // Example verification logic
-        if (document.getExpiryDate().isBefore(LocalDate.now())) {
-            return false; // Document is expired
-        }
-        return true; // Document is valid
+        return !document.hasDiscrepancy() && !isDocumentExpired(document) && isIssueDateValid(document);
+    }
+
+    private boolean isDocumentExpired(Document document) {
+        return document.getExpiryDate().isBefore(LocalDate.now());
+    }
+
+    private boolean isIssueDateValid(Document document) {
+        return !document.getIssueDate().isAfter(LocalDate.now());
     }
 }
-
