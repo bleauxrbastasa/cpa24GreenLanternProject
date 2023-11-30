@@ -4,7 +4,6 @@ Team Green Lantern,  Proposal for "ComplianceChecker: A Java-Based Simulation In
 
 
 Team Green Lantern,
-
 Proposal for "ComplianceChecker: A Java-Based Simulation Inspired by 'Papers, Please'"
 Abstract
 The proposed Java program, tentatively named "ComplianceChecker," aims to offer a simulated environment that models the core gameplay mechanics of the game "Papers, Please." The project aligns with the learning objectives in the college's learning plan for LAB Java class, specifically targeting the understanding and application of various data structures and algorithms. The purpose of the project is twofold: (1) To instill a deeper understanding of the concepts taught in the course, and (2) To familiarize students with practical implementation scenarios that make use of multiple data structures and algorithms.
